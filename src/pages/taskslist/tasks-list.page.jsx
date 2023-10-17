@@ -22,7 +22,12 @@ const AllTasksList = () => {
                 position: 'top-center',
             });
         } else {
-            const updatedTasks = [...tasks, { id: tasks.length + 1, ...newTask }];
+            const largestId = Math.max(...tasks.map(task => task.id));
+            const newTaskWithId = {
+                id: largestId + 1,
+                ...newTask
+            };
+            const updatedTasks = [...tasks, newTaskWithId];
             setTasks(updatedTasks);
             toast.success('Task Created Successfully', {
                 position: 'top-center',

@@ -7,6 +7,7 @@ import Stack from "react-bootstrap/Stack";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
+import {Pagination} from "react-bootstrap";
 
 const TasksList = ({tasks, onDeleteTask, onEditTask}) => {
     const [filteredTasks, setFilteredTasks] = useState(tasksData);
@@ -58,7 +59,8 @@ const TasksList = ({tasks, onDeleteTask, onEditTask}) => {
                             <Dropdown.Item onClick={() => sortTasks('id')}>ID</Dropdown.Item>
                             <Dropdown.Item onClick={() => sortTasks('title')}>Title</Dropdown.Item>
                         </DropdownButton>
-                        <Form.Select className={"ms-3"} aria-label="Status" name="status" onChange={(e) => filterTasks(e.target.value)}>
+                        <Form.Select className={"ms-3"} aria-label="Status" name="status"
+                                     onChange={(e) => filterTasks(e.target.value)}>
                             <option value="all">Show All Tasks</option>
                             <option value="not-started">Not Started</option>
                             <option value="in-progress">In Progress</option>
@@ -68,21 +70,23 @@ const TasksList = ({tasks, onDeleteTask, onEditTask}) => {
                 </Col>
             </Row>
             <Row>
-            {currentTasks.map((task) => (
-                <Col key={task.id} lg={6}>
-                    <Task task={task} onDelete={onDeleteTask} onEdit={onEditTask} />
-                </Col>
-            ))}
+                {currentTasks.map((task) => (
+                    <Col key={task.id} lg={6}>
+                        <Task task={task} onDelete={onDeleteTask} onEdit={onEditTask}/>
+                    </Col>
+                ))}
             </Row>
-            <div>
+            <Pagination className={"mt-3"}>
+                <Pagination.First onClick={() => paginate(1)}/>
                 {Array(Math.ceil(filteredTasks.length / tasksPerPage))
                     .fill()
                     .map((_, index) => (
-                        <button key={index} onClick={() => paginate(index + 1)}>
+                        <Pagination.Item key={index} onClick={() => paginate(index + 1)}>
                             {index + 1}
-                        </button>
+                        </Pagination.Item>
                     ))}
-            </div>
+                <Pagination.Last onClick={() => paginate(Math.ceil(filteredTasks.length / tasksPerPage))}/>
+            </Pagination>
         </>
     );
 };

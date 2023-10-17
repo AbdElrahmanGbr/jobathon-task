@@ -4,6 +4,11 @@ import {BsTrashFill} from "react-icons/bs";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {useState} from "react";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Stack from "react-bootstrap/Stack";
 const Task = ({task, onDelete, onEdit}) => {
 
     const [editMode, setEditMode] = useState(false);
@@ -27,43 +32,61 @@ const Task = ({task, onDelete, onEdit}) => {
 
     const statusToBorderColor = {
         "not-started": "danger",
-        "in-progress": "warning",
+        "in-progress": "primary",
         "finished": "success",
     };
 
     const taskStatusColor = statusToBorderColor[task.status] || "primary";
 
     return (
-            <Card className={"taskCard mb-4"} border={taskStatusColor}>
+            <Card className={`taskCard mb-4 text-${taskStatusColor}`} border={taskStatusColor} >
                 <Card.Header>Task No# {task.id}</Card.Header>
                 <Card.Body>
                     {editMode ? (
-                            <div>
-                                <input
-                                    type="text"
-                                    value={editedTitle}
-                                    onChange={(e) => setEditedTitle(e.target.value)}
+                        <>
+                            <Row>
+                                <Col md={6}>
+                                    <InputGroup>
+                                        <InputGroup.Text>Title:</InputGroup.Text>
+                                        <Form.Control aria-label="Task Title"
+                                                      name="description"
+                                                      value={editedTitle}
+                                                      onChange={(e) => setEditedTitle(e.target.value)}
+                                        />
+                                    </InputGroup>
+                                </Col>
+                                <Col md={6}>
+                                    <Form.Select aria-label="Status" name="status" onChange={(e) => setEditedStatus(e.target.value)}>
+                                        <option disabled>Task Status</option>
+                                        <option value="not-started">Not Started</option>
+                                        <option value="in-progress">In Progress</option>
+                                        <option value="finished">Finished</option>
+                                    </Form.Select>
+                                </Col>
+
+                            </Row>
+                        <Row className={"my-3"}>
+                            <InputGroup>
+                                <InputGroup.Text>Description:</InputGroup.Text>
+                                <Form.Control as="textarea" aria-label="Task Description"
+                                              value={editedDescription}
+                                              onChange={(e) => setEditedDescription(e.target.value)}
                                 />
-                                <textarea
-                                    value={editedDescription}
-                                    onChange={(e) => setEditedDescription(e.target.value)}
-                                />
-                                <Form.Select aria-label="Status" name="status" onChange={(e) => setEditedStatus(e.target.value)}>
-                                    <option disabled>Task Status</option>
-                                    <option value="not-started">Not Started</option>
-                                    <option value="in-progress">In Progress</option>
-                                    <option value="finished">Finished</option>
-                                </Form.Select>
-                                <button onClick={handleSave}>Save</button>
-                                <button onClick={handleCancel}>Cancel</button>
-                            </div>
+                            </InputGroup>
+                        </Row>
+                           <Stack direction={"horizontal"} className={"justify-content-start"}>
+                            <Button variant={"success"} className={"me-2"} onClick={handleSave}>Save</Button>
+                            <Button variant={"danger"} onClick={handleCancel}>Cancel</Button>
+                        </Stack>
+                        </>
+
                     ) : (
                         <>
-                            <Card.Title className={`text-${taskStatusColor}`}>{task.title}</Card.Title>
+                            <Card.Title>{task.title}</Card.Title>
                             <Card.Text>
                                 {task.description}
                             </Card.Text>
-                            <Card.Text className={`text-${taskStatusColor}`}>
+                            <Card.Text>
                                 {task.status}
                             </Card.Text>
                             <Card.Footer>

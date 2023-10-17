@@ -22,5 +22,11 @@ export const tasksData = [
     title: "Start with CRUD operations",
     status: "not-started",
     description: "A description for starting CRUD operations."
-  }
+  },
+  {
+    id: 5,
+    title: "Add Toastify",
+    status: "in-progress",
+    description: "A description for Toast."
+  },
 ];

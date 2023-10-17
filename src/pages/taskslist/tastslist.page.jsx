@@ -3,13 +3,17 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useEffect, useState} from "react";
 import {tasksData} from "../../data/tasks-data-module";
+import Stack from "react-bootstrap/Stack";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import Form from "react-bootstrap/Form";
 
 const TasksList = ({tasks, onDeleteTask, onEditTask}) => {
     const [filteredTasks, setFilteredTasks] = useState(tasksData);
     const [statusFilter, setStatusFilter] = useState('all');
     const [sortBy, setSortBy] = useState('id');
     const [currentPage, setCurrentPage] = useState(1);
-    const tasksPerPage = 5;
+    const tasksPerPage = 4;
 
     useEffect(() => {
         setFilteredTasks(tasks);
@@ -46,22 +50,30 @@ const TasksList = ({tasks, onDeleteTask, onEditTask}) => {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     return (
-        <Row>
-            <div>
-                <button onClick={() => sortTasks('id')}>Sort by ID</button>
-                <button onClick={() => sortTasks('title')}>Sort by Title</button>
-                <select onChange={(e) => filterTasks(e.target.value)}>
-                    <option value="all">Show All</option>
-                    <option value="not-started">Not Started</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="finished">Finished</option>
-                </select>
-            </div>
+        <>
+            <Row className={"my-4"}>
+                <Col lg={6} className={"ms-auto"}>
+                    <Stack direction={"horizontal"} className={"justify-content-end"}>
+                        <DropdownButton variant={"warning"} id="dropdown-basic-button" title="Sort By">
+                            <Dropdown.Item onClick={() => sortTasks('id')}>ID</Dropdown.Item>
+                            <Dropdown.Item onClick={() => sortTasks('title')}>Title</Dropdown.Item>
+                        </DropdownButton>
+                        <Form.Select className={"ms-3"} aria-label="Status" name="status" onChange={(e) => filterTasks(e.target.value)}>
+                            <option value="all">Show All Tasks</option>
+                            <option value="not-started">Not Started</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="finished">Finished</option>
+                        </Form.Select>
+                    </Stack>
+                </Col>
+            </Row>
+            <Row>
             {currentTasks.map((task) => (
                 <Col key={task.id} lg={6}>
                     <Task task={task} onDelete={onDeleteTask} onEdit={onEditTask} />
                 </Col>
             ))}
+            </Row>
             <div>
                 {Array(Math.ceil(filteredTasks.length / tasksPerPage))
                     .fill()
@@ -71,7 +83,7 @@ const TasksList = ({tasks, onDeleteTask, onEditTask}) => {
                         </button>
                     ))}
             </div>
-        </Row>
+        </>
     );
 };
 

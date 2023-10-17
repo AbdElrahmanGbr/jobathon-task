@@ -3,18 +3,19 @@ import "./task.css"
 import {BsTrashFill} from "react-icons/bs";
 import {BiSolidEditAlt} from "react-icons/bi";
 import {useState} from "react";
+import Form from "react-bootstrap/Form";
 const Task = ({task, onDelete, onEdit}) => {
 
     const [editMode, setEditMode] = useState(false);
     const [editedTitle, setEditedTitle] = useState(task.title);
     const [editedDescription, setEditedDescription] = useState(task.description);
-
+    const [editedStatus, setEditedStatus] = useState(task.status)
     const handleEdit = () => {
         setEditMode(true);
     };
 
     const handleSave = () => {
-        onEdit(task.id, editedTitle, editedDescription);
+        onEdit(task.id, editedTitle, editedDescription, editedStatus);
         setEditMode(false);
     };
 
@@ -33,7 +34,7 @@ const Task = ({task, onDelete, onEdit}) => {
     const taskStatusColor = statusToBorderColor[task.status] || "primary";
 
     return (
-            <Card className={"taskCard mb-3"} border={taskStatusColor}>
+            <Card className={"taskCard mb-4"} border={taskStatusColor}>
                 <Card.Header>Task No# {task.id}</Card.Header>
                 <Card.Body>
                     {editMode ? (
@@ -47,6 +48,12 @@ const Task = ({task, onDelete, onEdit}) => {
                                     value={editedDescription}
                                     onChange={(e) => setEditedDescription(e.target.value)}
                                 />
+                                <Form.Select aria-label="Status" name="status" onChange={(e) => setEditedStatus(e.target.value)}>
+                                    <option disabled>Task Status</option>
+                                    <option value="not-started">Not Started</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="finished">Finished</option>
+                                </Form.Select>
                                 <button onClick={handleSave}>Save</button>
                                 <button onClick={handleCancel}>Cancel</button>
                             </div>

@@ -1,11 +1,16 @@
-import Task from "../../components/task";
+import Task from "../../components/task/task";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {tasksData} from "../../data/tasks-data-module";
 
 const TasksList = ({tasks}) => {
-    const [filteredTasks, setFilteredTasks] = useState(tasks);
+    const [filteredTasks, setFilteredTasks] = useState(tasksData);
     const [statusFilter, setStatusFilter] = useState('all');
+
+    useEffect(() => {
+        setFilteredTasks(tasks);
+    }, [tasks]);
     const filterTasks = (status) => {
         if (status === 'all') {
             setFilteredTasks(tasks);

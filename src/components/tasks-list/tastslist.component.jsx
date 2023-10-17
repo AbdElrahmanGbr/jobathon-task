@@ -1,8 +1,7 @@
-import Task from "../../components/task/task";
+import Task from "../task/task";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useEffect, useState} from "react";
-import {tasksData} from "../../data/tasks-data-module";
 import Stack from "react-bootstrap/Stack";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -10,7 +9,7 @@ import Form from "react-bootstrap/Form";
 import {Pagination} from "react-bootstrap";
 
 const TasksList = ({tasks, onDeleteTask, onEditTask}) => {
-    const [filteredTasks, setFilteredTasks] = useState(tasksData);
+    const [filteredTasks, setFilteredTasks] = useState([]);
     const [statusFilter, setStatusFilter] = useState('all');
     const [sortBy, setSortBy] = useState('id');
     const [currentPage, setCurrentPage] = useState(1);
@@ -49,7 +48,9 @@ const TasksList = ({tasks, onDeleteTask, onEditTask}) => {
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
     const currentTasks = filteredTasks.slice(indexOfFirstTask, indexOfLastTask);
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
     return (
         <>
             <Row className={"my-4"}>

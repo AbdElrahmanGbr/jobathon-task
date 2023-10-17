@@ -17,7 +17,6 @@ const TaskForm = ({ onTaskCreate }) => {
             ...newTask,
             [name]: value,
         });
-        console.log(newTask)
     };
 
     const handleSubmit = (e) => {

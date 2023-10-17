@@ -15,6 +15,18 @@ function App() {
         console.log(tasks)
     };
 
+    const handleTaskDelete = (taskId) => {
+        const updatedTasks = tasks.filter((task) => task.id !== taskId);
+        setTasks(updatedTasks);
+    };
+
+    const handleTaskEdit = (taskId, editedTitle, editedDescription) => {
+        const updatedTasks = tasks.map((task) =>
+            task.id === taskId ? { ...task, title: editedTitle, description: editedDescription } : task
+        );
+        setTasks(updatedTasks);
+    };
+
     return (
         <Container>
             <h1 className={"text-center"}>Task List</h1>
@@ -22,7 +34,7 @@ function App() {
                 {showForm ? "Hide Form" : "Create Task"}
             </button>
             {showForm && <TaskForm onTaskCreate={handleTaskCreate} />}
-            <TasksList tasks={tasks} />
+            <TasksList tasks={tasks} onDeleteTask={handleTaskDelete} onEditTask={handleTaskEdit} />
         </Container>
     );
 }

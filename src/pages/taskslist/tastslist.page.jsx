@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import {useEffect, useState} from "react";
 import {tasksData} from "../../data/tasks-data-module";
 
-const TasksList = ({tasks}) => {
+const TasksList = ({tasks, onDeleteTask, onEditTask}) => {
     const [filteredTasks, setFilteredTasks] = useState(tasksData);
     const [statusFilter, setStatusFilter] = useState('all');
 
@@ -30,7 +30,7 @@ const TasksList = ({tasks}) => {
             </select>
             {filteredTasks.map((task) => (
                 <Col key={task.id} lg={6}>
-                    <Task task={task}/>
+                    <Task task={task} onDelete={onDeleteTask} onEdit={onEditTask} />
                 </Col>
             ))}
         </Row>

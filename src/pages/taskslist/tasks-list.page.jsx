@@ -22,7 +22,7 @@ const AllTasksList = () => {
                 position: 'top-center',
             });
         } else {
-            const largestId = Math.max(...tasks.map(task => task.id));
+            const largestId = tasks.length === 0 ? 0 : Math.max(...tasks.map(task => task.id));
             const newTaskWithId = {
                 id: largestId + 1,
                 ...newTask

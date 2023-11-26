@@ -28,6 +28,7 @@ const Task = ({task, onDelete, onEdit}) => {
         setEditMode(false);
         setEditedTitle(task.title);
         setEditedDescription(task.description);
+        setEditedStatus(task.status);
     };
 
     const statusToBorderColor = {

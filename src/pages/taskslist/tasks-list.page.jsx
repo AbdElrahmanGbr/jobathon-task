@@ -46,9 +46,9 @@ const AllTasksList = () => {
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
     };
 
-    const handleTaskEdit = (taskId, editedTitle, editedDescription) => {
+    const handleTaskEdit = (taskId, editedTitle, editedDescription, editedStatus) => {
         const updatedTasks = tasks.map((task) =>
-            task.id === taskId ? { ...task, title: editedTitle, description: editedDescription } : task
+            task.id === taskId ? { ...task, title: editedTitle, description: editedDescription, status: editedStatus } : task
         );
         toast.success(`Task No# ${taskId} Updated Successfully`, {
             position: 'top-center',

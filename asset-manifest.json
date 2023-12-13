@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/jobathon-task/static/css/main.305b51f0.css",
+    "main.js": "/jobathon-task/static/js/main.de0a6eb3.js",
+    "index.html": "/jobathon-task/index.html",
+    "main.305b51f0.css.map": "/jobathon-task/static/css/main.305b51f0.css.map",
+    "main.de0a6eb3.js.map": "/jobathon-task/static/js/main.de0a6eb3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.305b51f0.css",
+    "static/js/main.de0a6eb3.js"
+  ]
+}
